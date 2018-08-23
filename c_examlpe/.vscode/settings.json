@@ -1,0 +1,5 @@
+{
+    "files.associations": {
+        "juce_audio_basics.h": "c"
+    }
+}
