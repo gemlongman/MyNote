@@ -1,5 +1,12 @@
 {
     "files.associations": {
-        "juce_audio_basics.h": "c"
+        "appconfig.h": "c",
+        "complex.h": "c",
+        "types.h": "c",
+        "math.h": "c",
+        "array": "c",
+        "string_view": "c",
+        "initializer_list": "c",
+        "utility": "c"
     }
 }

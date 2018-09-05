@@ -1,0 +1,16 @@
+
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.exe
+*.out
+*.app
+*.log
+
+*/.vscode/
+.vscode/
+*/.vscode
+.vscode
+
+.vscode/*

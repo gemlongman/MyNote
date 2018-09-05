@@ -1,13 +1,14 @@
-
 .PHONY: all clean
 
-Include := -I "E:\Program Files\juce-5.3.2-windows\JUCE\modules" -I "E:\MinGW\include" -I "E:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\lib" -I "E:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\atlmfc\lib" -I "C:\Program Files (x86)\Windows Kits\10\lib\10.0.16299.0\ucrt\x86" -I "C:\Program Files (x86)\Windows Kits\10\lib\10.0.16299.0\um\x86" -I "C:\Program Files (x86)\Windows Kits\NETFXSDK\4.6\Lib\um\x86"
 
-main:
-	gcc main.c -o runme $(Include)
+compiler = gcc
+depend = fft/fft.c wave/wave.c
+ouput = wavfilter
 
-
-all:waveform fftexample wavetrans
+wavfilter:
+	$(compiler) main.c $(depend) -o $(ouput) -lm
+	
+all: wavfilter
 
 clean:
-	rm -rf *.o *~ *.exe 
+	rm -rf *.o *.exe *~ wavetrans wavfilter wav/noisy1.dat wav/*-clean.wav wav/*-equalized.wav
