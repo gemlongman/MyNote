@@ -2,8 +2,13 @@
 own note
 
 ## svn
+
+svn checkout http://10.76.1.125:8080/svn/szylib/trunk/szylib
+
 **creat br**
 svn copy http://10.76.1.125:8080/svn/muffler-sim-web/trunk http://10.76.1.125:8080/svn/muffler-sim-web/branches/dev4gy -m 'make branches gy'
+
+svn copy http://10.76.1.125:8080/svn/scan_prediction/trunk http://10.76.1.125:8080/svn/scan_prediction/branches/gydev -m 'make branches gy'
 
 **merge to trunk**
 ```
@@ -145,3 +150,11 @@ clearInterval(intervalVariable);
 
 jQuery BlockUI 实现锁屏
 http://bookshadow.com/weblog/2014/09/26/jquery-blockui-js-introduction/
+
+### latex 
+latexmk -xelatex book_DGP.tex
+
+### 全文件替换
+```
+grep -rl "Krizhevsky2012imagenet" *|xargs -i sed -i 's/Krizhevsky2012imagenet/krizhevsky2012imagenet/g' "{}"
+```

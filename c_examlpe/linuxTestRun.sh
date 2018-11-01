@@ -8,7 +8,7 @@ function pause(){
 make clean
 make wavfilter
 
-./wavfilter -t Transmissionloss.txt -i wav/simple440add1000.wav -o wav/simple440add1000-tqualized.wav
+./wavfilter -t Transmissionloss.txt -i wav/simple440add1000.wav -o wav/simple400add1000-tqualized.wav
 
 exit 0
 #---------------------------------------------------------------------------------------------------

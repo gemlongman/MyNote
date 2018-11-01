@@ -66,16 +66,20 @@ void trans_equalizer(void *context, int n, int channel, t_complex *data) {
 
     for(i = 0; i < size; i++) {
 #ifdef gy_debug
-        //fprintf(stdout, "\n %d \t\t %lld \t %lld \t * \t %lld \t %lld", i, data[i].r, data[i].i, ctx->data[i].r,  ctx->data[i].i);
-        //fprintf(stdout, "%d\t%d\t%lld\t%lld\n", i, i*44100/size, data[i].r/ (1 << COMPLEX_PRECISION), data[i].i/ (1 << COMPLEX_PRECISION));
-        //fprintf(stdout, "%d\t%lf\t%lf\n", i,pow(data[i].r/ (1 << COMPLEX_PRECISION), 2), pow( data[i].i/ (1 << COMPLEX_PRECISION),2) );
+        //int size = 4096; //c->size
+        int samples_per_sec = 44100; //c->wave_fmt.samples_per_sec 
+        int f = ( i <= size / 2 ) ? (double) i / size * samples_per_sec : (double) ( size - i ) / size * samples_per_sec;
+        // // fprintf(stdout, "\n %d \t\t %lld \t %lld \t * \t %lld \t %lld", i, data[i].r, data[i].i, ctx->data[i].r,  ctx->data[i].i);
+        //// print i f r i r+i r^2+i^2
+        fprintf(stdout, "%d\t%d\t%lld\t%lld\t%lld\t%lld", i, f, data[i].r/ (1 << COMPLEX_PRECISION), data[i].i/ (1 << COMPLEX_PRECISION) , data[i].r/ (1 << COMPLEX_PRECISION)+data[i].i/ (1 << COMPLEX_PRECISION) , data[i].r/ (1 << COMPLEX_PRECISION)*data[i].r/ (1 << COMPLEX_PRECISION) + data[i].i/ (1 << COMPLEX_PRECISION) * data[i].i/ (1 << COMPLEX_PRECISION));
 #endif
         data[i].r = data[i].r * ctx->data[i].r / (1 << COMPLEX_PRECISION);
         data[i].i = data[i].i * ctx->data[i].r / (1 << COMPLEX_PRECISION);
 
 #ifdef gy_debug
-        //fprintf(stdout, "\n %d \t\t %lld \t %lld \t * \t %lld \t %lld", i, data[i].r, data[i].i, ctx->data[i].r,  ctx->data[i].i);
-        fprintf(stdout, "%d\t%d\t%lld\t%lld\n", i, i*44100/size, data[i].r/ (1 << COMPLEX_PRECISION), data[i].i/ (1 << COMPLEX_PRECISION));
+        // //fprintf(stdout, "\n %d \t\t %lld \t %lld \t * \t %lld \t %lld", i, data[i].r, data[i].i, ctx->data[i].r,  ctx->data[i].i);
+        // print continue r i r+i r^2+i^2
+        fprintf(stdout, "\t%lld\t%lld\t%lld\t%lld\n", data[i].r/ (1 << COMPLEX_PRECISION), data[i].i/ (1 << COMPLEX_PRECISION), data[i].r/ (1 << COMPLEX_PRECISION)+ data[i].i/ (1 << COMPLEX_PRECISION) , data[i].r/ (1 << COMPLEX_PRECISION)*data[i].r/ (1 << COMPLEX_PRECISION) + data[i].i/ (1 << COMPLEX_PRECISION) * data[i].i/ (1 << COMPLEX_PRECISION));
 #endif
     }
 }
@@ -226,12 +230,7 @@ void riff_write(struct global_context *c, FILE *out) {
     status = fwrite(&tmp_chunk, sizeof(t_chunk), 1, out);
     assert(status);
 
-// #ifdef gy_debug
-//     fprintf(stdout, "t %ld\n", sizeof(t_riff_hdr) );
-//     fprintf(stdout, "t %ld\n", sizeof(t_chunk) );
-//     fprintf(stdout, "t %ld\n", sizeof(t_wave_format_ex) );
-//     fprintf(stdout, "t %ld\n", sizeof(t_chunk));
-// #endif
+
 }
 
 void init_fft_maps(struct global_context *c) {
@@ -271,7 +270,7 @@ void read_eq_cells(struct equalizer_context *c, FILE *in) {
 void read_trans_loss_cells(struct equalizer_context *c, FILE *in) {
     char buf[1024], *comment;
     c->ncells = 0;
-    double f,tl;// Transmission loss = 10 * log(Pi/Po)
+    double f,tl;// Transmission loss = 10 * log10(Pi/Po)
     int i= 0;
     double sumAmplitude = 0.0;// for  weighted by their amplitude
     while(fgets(buf, sizeof(buf), in) != NULL) {
@@ -281,7 +280,7 @@ void read_trans_loss_cells(struct equalizer_context *c, FILE *in) {
         if(sscanf(buf, "%lf%lf",&f,&tl) != 2)
             continue;
         c->f[c->ncells] = f;
-        c->a[c->ncells] = 1/powl(10,tl/10);// Po/Pi = 1 / 10 ^ (loss / 10)
+        c->a[c->ncells] = 1/powl(10,tl/20);// Po/Pi = 1 / 10 ^ (loss / 20)
         sumAmplitude += c->a[c->ncells];// 
         c->q[c->ncells] = 1;
         if(++(c->ncells) >= MAX_EQ_CELLS){
@@ -292,10 +291,7 @@ void read_trans_loss_cells(struct equalizer_context *c, FILE *in) {
     // equally average weight ( 1 / c->ncells )or weighted by their amplitude( c->a[c->ncells] / sumAmplitude )
     for( i= 0; i < c->ncells; i++ ) {
         //c->q[ i ] = c->a[i] / sumAmplitude;
-#ifdef gy_debug
-        //fprintf(stderr, "%lf \t %lf---", f, tl);
-        fprintf(stdout, "%lf\t%lf\t%lf\n",c->f[i], c->a[i],c->q[i]);
-#endif
+        fprintf(stdout, "%lf\t%lf\t%lf\n",c->f[i], c->a[i], c->q[i]);
     }
     //fprintf(stdout, "Successfully read %d trans equalizer cells\n", c->ncells);
 }
@@ -356,7 +352,14 @@ void compute_trans_data(struct global_context *c, struct equalizer_context *e) {
         for(i = 0; i < e->ncells; i++) {
             adbi_k = adb[i] * exp( -fabs( log( k / e->f[i] ) ) * e->q[i] );
             prod *= pow(10, adbi_k / 10);
+#ifdef gy_debug
+            //fprintf(stdout, "%lf\t", adbi_k);// , adb[i]
+#endif
         }
+#ifdef gy_debug
+        //fprintf(stdout, "\n%lf\t%lf\n", k, prod);
+        //fprintf(stdout, "\n");
+#endif
         /* fprintf(stderr, "%lf\n", prod); */
         e->data[j].r = prod * (1 << COMPLEX_PRECISION);
         e->data[j].i = 0;
@@ -662,8 +665,9 @@ int main(int argc, char **argv) {
         assert(status);
     }
 
-
+#ifndef gy_debug
     fprintf(stdout, "\rFrame %d/%d (100%%)\n", frames, frames);
+#endif
     fflush(stderr);
     fflush(stdout);
  
