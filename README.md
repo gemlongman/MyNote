@@ -151,6 +151,11 @@ clearInterval(intervalVariable);
 jQuery BlockUI 实现锁屏
 http://bookshadow.com/weblog/2014/09/26/jquery-blockui-js-introduction/
 
+##linux u disk system
+
+sudo dd if=windows_10_ultimate_x64_2018.iso of=/dev/sdb
+
+
 ### latex 
 latexmk -xelatex book_DGP.tex
 
@@ -158,3 +163,5 @@ latexmk -xelatex book_DGP.tex
 ```
 grep -rl "Krizhevsky2012imagenet" *|xargs -i sed -i 's/Krizhevsky2012imagenet/krizhevsky2012imagenet/g' "{}"
 ```
+
+shutdown -h +60
