@@ -17,6 +17,31 @@ svn merge http://10.76.1.125:8080/svn/muffler-sim-web/branches/dev4gy
 
 ```
 
+## env
+
+sudo apt-get update
+sudo apt-get upgrade
+sudo apt-get install libf2c2-dev libeigen3-dev libalglib-dev liblbfgs-dev petsc-dev libboost-all-dev
+sudo apt-get install cmake g++ libffi-dev  libmount-dev libpcre++-dev
+sudo apt-get install libxml2-dev libpcl-dev libvtk6-dev libglfw3-dev libglew-dev libglib2.0-dev
+sudo apt-get install build-essential libgl1-mesa-dev libglu1-mesa-dev freeglut3-dev libproj-dev
+vtk
+	创建build文件夹进入build文件夹进行配置，进行配置ccmake .. 
+	5.运行步骤4的代码会跳出一下配置：
+	如果没有编译过的会提示没有缓存，可以按c进行配置，之后就会出现这个界面，用上下建选择条目，BUILD_SHARE_LIBS 选择ON ，VTK_Group_Qt选择 On就可以了，其它的可以不做更改，再次按c进行配置确认，按g保存配置。
+	make
+	sudo make install
+
+geo_sim_sdk/trunk script $ sudo ./install.sh 
+hjlib/build $ sudo make install
+sudo ./szy-lib-install.sh 
+
+package ： glut 
+
+eigen-eigen
+spectra-0.6.2 copy include usr/include/spectra
+
+
 ## pythoncode
 
 if "QuadrangulateRootPath" in os.environ and os.getenv('QuadrangulateRootPath') != '' :
@@ -151,6 +176,11 @@ clearInterval(intervalVariable);
 jQuery BlockUI 实现锁屏
 http://bookshadow.com/weblog/2014/09/26/jquery-blockui-js-introduction/
 
+##linux u disk system
+
+sudo dd if=windows_10_ultimate_x64_2018.iso of=/dev/sdb
+
+
 ### latex 
 latexmk -xelatex book_DGP.tex
 
@@ -177,3 +207,6 @@ sudo vi /etc/rc.local
 /usr/bin/python /usr/local/bin/ssserver -c /etc/shadowsocks.json -d start
 
 
+```
+
+shutdown -h +60
