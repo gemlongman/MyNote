@@ -157,4 +157,23 @@ latexmk -xelatex book_DGP.tex
 ### 全文件替换
 ```
 grep -rl "Krizhevsky2012imagenet" *|xargs -i sed -i 's/Krizhevsky2012imagenet/krizhevsky2012imagenet/g' "{}"
+
 ```
+
+{
+  "server":"172.96.206.101",
+  "server_port":12306,
+  "local_port":1080,
+  "password":"gaohongyu",
+  "timeout":600,
+  "method":"aes-256-cfb"
+}
+
+sudo ssserver -c /etc/shadowsocks.json -d start
+
+sudo ssserver -d stop
+
+sudo vi /etc/rc.local
+/usr/bin/python /usr/local/bin/ssserver -c /etc/shadowsocks.json -d start
+
+
