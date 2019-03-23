@@ -27,8 +27,25 @@ D:\Program Files\of_v0.10.1_vs2017_release\addons\ofxCv\libs\CLD\src
 opencv/include/ The OpenCv headers, located in addons/ofxOpenCv/
 opencv/lib/
 
+### q
+opencv
+NuiApi.h
+NuiKinectFusionApi
 
+git clone git@github.com:JNeiger/3d_Scanner_Take_2.git
+git clone git@github.com:kkakulphimp/3D_Scanner_PUBLIC.git
+
+## c#
+
+Install-Package Microsoft.Kinect -Version 2.0.1410.19000
+Install-Package Microsoft.Kinect.Fusion -Version 2.0.1410.19000
 #linux
 
 CGR Localization
 http://www.cs.cmu.edu/~coral/projects/localization/cgr/source/index.html
+
+
+## kinect
+git@github.com:mehmetsatilmis/simple-kinect-scanner.git
+git@github.com:letrend/kinect_scanner.git
+git@github.com:KeckCAVES/SARndbox.git
