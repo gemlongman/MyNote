@@ -32,8 +32,6 @@ opencv
 NuiApi.h
 NuiKinectFusionApi
 
-git clone git@github.com:JNeiger/3d_Scanner_Take_2.git
-git clone git@github.com:kkakulphimp/3D_Scanner_PUBLIC.git
 
 ## c#
 
