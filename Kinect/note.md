@@ -47,3 +47,7 @@ http://www.cs.cmu.edu/~coral/projects/localization/cgr/source/index.html
 git@github.com:mehmetsatilmis/simple-kinect-scanner.git
 git@github.com:letrend/kinect_scanner.git
 git@github.com:KeckCAVES/SARndbox.git
+
+#
+git@github.com:gemlongman/tsdf-fusion.git
+git@github.com:gemlongman/tsdf-fusion-python.git
