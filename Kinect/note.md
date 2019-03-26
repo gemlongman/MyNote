@@ -44,6 +44,6 @@ http://www.cs.cmu.edu/~coral/projects/localization/cgr/source/index.html
 
 
 ## kinect
-git@github.com:mehmetsatilmis/simple-kinect-scanner.git
-git@github.com:letrend/kinect_scanner.git
-git@github.com:KeckCAVES/SARndbox.git
+git clone git@github.com:mehmetsatilmis/simple-kinect-scanner.git
+git clone git@github.com:letrend/kinect_scanner.git
+git clone git@github.com:KeckCAVES/SARndbox.git
