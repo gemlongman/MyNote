@@ -50,6 +50,9 @@ Install-Package Microsoft.Kinect.Fusion -Version 2.0.1410.19000
 Kinect for Xbox one(v2) + Ubuntu 14.04 +ROS 安装
 http://www.cnblogs.com/kunyuanjushi/p/5204436.html
 
+郁葱可以跑的教程
+https://github.com/code-iai/iai_kinect2
+
 CGR Localization
 http://www.cs.cmu.edu/~coral/projects/localization/cgr/source/index.html
 
