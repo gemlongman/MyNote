@@ -1,11 +1,4 @@
 
-## dev
-
-实验
-改进
-
-组会报告
-
 ## svn
 **project**
 http://10.76.1.125:8080/svn/QuadWebApp
@@ -25,10 +18,3 @@ svn merge http://10.76.1.125:8080/svn/muffler-sim-web/branches/dev4gy
 
 ### proxy
 
-sslocal -c /etc/shadowsocks/config.json 2>&1 > /dev/null &
-
-print
-ipps://wsy-PC.local:631/printers/HP-LaserJet-P2055d_at_WSY-USB
-
-
-google-chrome-stable --proxy-server="http://172.96.206.101:12306"

@@ -1,6 +1,8 @@
 # MyNote
 own note
 
+下载不成功，使用百度离线下载
+
 ## svn
 
 svn checkout http://10.76.1.125:8080/svn/szylib/trunk/szylib
