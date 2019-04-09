@@ -27,6 +27,7 @@ sudo apt-get install libf2c2-dev libeigen3-dev libalglib-dev liblbfgs-dev petsc-
 sudo apt-get install cmake g++ libffi-dev  libmount-dev libpcre++-dev
 sudo apt-get install libxml2-dev libpcl-dev libvtk6-dev libglfw3-dev libglew-dev libglib2.0-dev
 sudo apt-get install build-essential libgl1-mesa-dev libglu1-mesa-dev freeglut3-dev libproj-dev
+sudo apt-get install libpcl-dev pcl-tools
 vtk
 	创建build文件夹进入build文件夹进行配置，进行配置ccmake .. 
 	5.运行步骤4的代码会跳出一下配置：
@@ -57,8 +58,6 @@ source env/bin/activate
 python3 manage.py runserver 0.0.0.0:8001
 
 ## apache
-
-47.254.42.173:8000
 
 sudo a2ensite sitequad
 sudo a2ensite sitemuffler
