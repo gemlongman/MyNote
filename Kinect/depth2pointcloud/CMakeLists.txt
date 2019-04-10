@@ -10,5 +10,9 @@ link_directories(${PCL_LIBRARY_DIRS} ${OPENCV_LIBRARY_DIRS})
 add_definitions(${PCL_DEFINITIONS} ${OPENCV_DEFINITIONS})
 
 list(REMOVE_ITEM PCL_LIBRARIES "vtkproj4")
-add_executable (depth2cloud csdndepth2cloud.cpp)
-target_link_libraries (depth2cloud ${PCL_LIBRARIES} ${OpenCV_LIBS})
+
+add_executable (csdndepth2cloud csdndepth2cloud.cpp)
+add_executable (cloudview cloudviewrolor.cpp)
+
+target_link_libraries (csdndepth2cloud ${PCL_LIBRARIES} ${OpenCV_LIBS})
+target_link_libraries (cloudview ${PCL_LIBRARIES} ${OpenCV_LIBS})
