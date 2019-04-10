@@ -65,3 +65,12 @@ git@github.com:KeckCAVES/SARndbox.git
 #
 git@github.com:gemlongman/tsdf-fusion.git
 git@github.com:gemlongman/tsdf-fusion-python.git
+
+
+#step by step
+
+## depth img to  point cloud
+https://blog.csdn.net/u012700322/article/details/51821249
+
+#cloud view
+https://blog.csdn.net/u014801811/article/details/79711773 
