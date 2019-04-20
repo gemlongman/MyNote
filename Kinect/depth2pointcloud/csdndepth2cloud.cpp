@@ -1,3 +1,5 @@
+#define debug
+
 // https://blog.csdn.net/u012700322/article/details/51821249
 // C++ 标准库
 #include <iostream>
@@ -12,24 +14,31 @@ using namespace std;
 // PCL 库
 #include <pcl/io/pcd_io.h>
 #include <pcl/point_types.h>
- 
+
 // 定义点云类型
-typedef pcl::PointXYZRGBA PointT;
+typedef pcl::PointXYZRGBA PointCT;
+typedef pcl::PointCloud<PointCT> PointCloudC; 
+
+typedef pcl::PointXYZ PointT;
 typedef pcl::PointCloud<PointT> PointCloud; 
- 
+
 // 相机内参
+/*
 const double camera_factor = 1000;
 const double camera_cx = 256.0;
 const double camera_cy = 212.0;
 const double camera_fx = 512.0;
 const double camera_fy = 424.0;
-/*
+*/
 const double camera_factor = 1000;
 const double camera_cx = 325.5;
 const double camera_cy = 253.5;
 const double camera_fx = 518.0;
 const double camera_fy = 519.0;
-*/
+
+const double MinDepth = 10;
+const double MaxDepth = 30;
+const double CutRate = 0.15;
 
 int depth2cloud(string rgbImageName, string depthImageName, string outCloudName)
 {
@@ -46,7 +55,7 @@ int depth2cloud(string rgbImageName, string depthImageName, string outCloudName)
  
     // 点云变量
     // 使用智能指针，创建一个空点云。这种指针用完会自动释放。
-    PointCloud::Ptr cloud ( new PointCloud );
+    PointCloudC::Ptr cloud ( new PointCloudC );
     // 遍历深度图
     for (int m = 0; m < depth.rows; m++)
         for (int n=0; n < depth.cols; n++)
@@ -57,7 +66,7 @@ int depth2cloud(string rgbImageName, string depthImageName, string outCloudName)
             if (d == 0)
                 continue;
             // d 存在值，则向点云增加一个点
-            PointT p;
+            PointCT p;
  
             // 计算这个点的空间坐标
             p.z = double(d) / camera_factor;
@@ -85,6 +94,13 @@ int depth2cloud(string rgbImageName, string depthImageName, string outCloudName)
     return 0;
 }
 
+bool isRightpoint(PointT p)
+{
+#ifdef debug1
+    cout << " p " << p.x << " " << p.y << " " << p.z <<endl;
+#endif
+    return true;
+}
 
 int depth2cloud(string depthImageName, string outCloudName)
 {
@@ -92,30 +108,50 @@ int depth2cloud(string depthImageName, string outCloudName)
     // 图像矩阵
     cv::Mat depth;
     // depth 是16UC1的单通道图像，注意flags设置-1,表示读取原始数据不做任何修改
-    depth = cv::imread(depthImageName, -1 );
+    depth = cv::imread(depthImageName, -1);
  
+    if(!depth.rows*depth.cols){
+        cerr<<"open file err"<<endl;
+    }
     // 点云变量
     // 使用智能指针，创建一个空点云。这种指针用完会自动释放。
-    PointCloud::Ptr cloud ( new PointCloud );
+    PointCloud::Ptr cloud (new PointCloud);
+
+    //cout << " depth.rows " << depth.rows << " depth.cols "<<depth.cols<<endl;
     // 遍历深度图
-    for (int m = 0; m < depth.rows; m++)
-        for (int n=0; n < depth.cols; n++)
+    for (int r = 0; r < depth.rows; r++)
+        for (int c = 0; c < depth.cols; c++)
         {
-            // 获取深度图中(m,n)处的值
-            ushort d = depth.ptr<ushort>(m)[n];
+            // 获取深度图中(r,c)处的值
+            ushort d = depth.ptr<ushort>(r)[c];
             // d 可能没有值，若如此，跳过此点
-            if (d == 0)
-                continue;
-            // d 存在值，则向点云增加一个点
+
+
             PointT p;
  
             // 计算这个点的空间坐标
             p.z = double(d) / camera_factor;
-            p.x = (n - camera_cx) * p.z / camera_fx;
-            p.y = (m - camera_cy) * p.z / camera_fy;
+
+            //delete useless point
+            if ( p.z < MinDepth || p.z > MaxDepth 
+            || r < depth.rows * CutRate || r > depth.rows * (1-CutRate)
+            || c < depth.cols * CutRate || c > depth.cols * (1-CutRate)  )
+            {
+            #ifdef debug1
+                cout << " r c z " << r << " " << c << " " << p.z <<endl;
+            #endif
+                continue;
+            }
+
+            p.x = (c - camera_cx) * p.z / camera_fx;
+            p.y = (r - camera_cy) * p.z / camera_fy;
  
             // 把p加入到点云中
-            cloud->points.push_back( p );
+            if( isRightpoint(p) )
+            {
+                cloud->points.push_back( p );
+            }
+            
         }
     // 设置并保存点云
     cloud->height = 1;
