@@ -72,5 +72,8 @@ git@github.com:gemlongman/tsdf-fusion-python.git
 ## depth img to  point cloud
 https://blog.csdn.net/u012700322/article/details/51821249
 
-#cloud view
+##cloud view
 https://blog.csdn.net/u014801811/article/details/79711773 
+
+##kinect v2性能分
+https://blog.csdn.net/jiaojialulu/article/details/52858268
