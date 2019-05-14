@@ -25,7 +25,7 @@ void showHelp(char * program_name)
             <<"P x y z"
             <<"or"
             <<"'T|t' x y z"
-            <"'R|r' 'X|Y|Z' angle";
+            <<"'R|r' 'X|Y|Z' angle";
   std::cout << std::endl;
   std::cout << "-h:  Show this help." << std::endl;
 }
@@ -43,7 +43,7 @@ Eigen::Affine3f GetTransAffine3f(string configFileName)
   //configFile.open(configFileName);
   if(!configFile.is_open())
   {
-    cerr << "cannot open " << configFile << endl;
+    cerr << "cannot open " << configFileName << endl;
     return transform;
   }
 
@@ -108,7 +108,7 @@ Eigen::Matrix4f  GetTransMatrix4f(string configFileName)
   //configFile.open(configFileName);
   if(!configFile.is_open())
   {
-    cerr << "cannot open " << configFile << endl;
+    cout << "cannot open " << configFileName << endl;
     return transform;
   }
 

@@ -3,13 +3,18 @@ cmake_minimum_required(VERSION 2.8 FATAL_ERROR)
 project(depth2mesh)
 
 #set(CMAKE_CXX_STANDARD 11)
+add_definitions(-std=c++11)
 
 find_package(PCL 1.2 REQUIRED)
 find_package(OpenCV REQUIRED)
 
+include_directories(./depthHandle)
+ADD_SUBDIRECTORY( depthHandle )
+
 include_directories(${PCL_INCLUDE_DIRS} ${OPENCV_INCLUDE_DIRS})
 link_directories(${PCL_LIBRARY_DIRS} ${OPENCV_LIBRARY_DIRS})
 add_definitions(${PCL_DEFINITIONS} ${OPENCV_DEFINITIONS})
+
 
 list(REMOVE_ITEM PCL_LIBRARIES "vtkproj4")
 
@@ -35,4 +40,4 @@ target_link_libraries (cloudAlign ${PCL_LIBRARIES})
 target_link_libraries (cloud2meshCube ${PCL_LIBRARIES})
 target_link_libraries (cloud2meshPoisson ${PCL_LIBRARIES})
 target_link_libraries (cloud2meshGreedy ${PCL_LIBRARIES})
-target_link_libraries (depth2meshGY ${PCL_LIBRARIES} ${OpenCV_LIBS})
+target_link_libraries (depth2meshGY ${PCL_LIBRARIES} ${OpenCV_LIBS} depthHandle)
