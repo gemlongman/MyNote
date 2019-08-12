@@ -1,0 +1,2 @@
+
+windeployqt youProgramName.exe

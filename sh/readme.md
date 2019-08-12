@@ -28,3 +28,6 @@ ${varible%%string*}          从右往左，删除最长的一个以string�
 ---------------------
 
 本文来自 finewings 的CSDN 博客 ，全文地址请点击：https://blog.csdn.net/finewings/article/details/5718133?utm_source=copy 
+
+#一行加后缀：把文件面 改成“string”，字符串，用于程序输入
+for i in $(ls);do echo \"$i\",;done > out.txt
