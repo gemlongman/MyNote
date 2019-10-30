@@ -1,7 +1,6 @@
 # MyNote
 own note
 
-下载不成功，使用百度离线下载
 
 ## svn
 
@@ -45,7 +44,7 @@ eigen-eigen
 spectra-0.6.2 copy include usr/include/spectra
 
 
-## pythoncode
+## python code
 
 if "QuadrangulateRootPath" in os.environ and os.getenv('QuadrangulateRootPath') != '' :
     python_home = os.getenv('QuadrangulateRootPath') + '/env'
@@ -206,7 +205,6 @@ sudo ssserver -d stop
 
 sudo vi /etc/rc.local
 /usr/bin/python /usr/local/bin/ssserver -c /etc/shadowsocks.json -d start
-
 
 ```
 

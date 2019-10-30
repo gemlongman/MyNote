@@ -12,14 +12,16 @@ toDirs=['datasets/s2f/trainA' ,'datasets/s2f/trainB' ,'datasets/caf/facetest3' ]
 import  os, random, shutil
 
 
-fromDirs = ['datasets/caf/face' , 'datasets/caf/sketch1']
+fromDirs = ['/home/gem/gygit/test/caf_cycle/sketch2/trainA' , '/home/gem/gygit/test/caf_cycle/sketch2/trainB']
 
-toDirs = ['datasets/s2f/trainA' , 'datasets/s2f/trainB']
+toDirs = ['/home/gem/gygit/test/caf_cycle/sketch2/testA' , '/home/gem/gygit/test/caf_cycle/sketch2/testB']
 
-filesNum = 60
+filesNum = 50
+
+isDeleteOld = 0
 
 #maybe useful in case copy 20% file for val or test
-def copyFile(fromDir,toDir,num,deleteTargetOld=1):
+def copyFile(fromDir,toDir,num,isDeleteOld=0):
         pathDir = os.listdir(fromDir)    #取图片的原始路径
         
         if num < 0:
@@ -33,6 +35,7 @@ def copyFile(fromDir,toDir,num,deleteTargetOld=1):
         sample = random.sample(pathDir, pickNums)  #随机选取picknumber数量的样本图片
         #print (sample)
        
+        deleteTargetOld=0      
         if not os.path.isdir(toDir):
             os.makedirs(toDir)
         elif deleteTargetOld:
@@ -42,7 +45,7 @@ def copyFile(fromDir,toDir,num,deleteTargetOld=1):
         print('copyFile from %s to %s within %d' % (fromDir,toDir,pickNums))
         for name in sample:
                 shutil.copyfile(os.path.join(fromDir, name), os.path.join(toDir, name) )
-                #shutil.movefile(os.path.join(fromDir, name), os.path.join(toDir, name) )
+                #shutil.move(os.path.join(fromDir, name), os.path.join(toDir, name) )
         return
 
 def searchfile(onedir,name):
@@ -105,4 +108,4 @@ if __name__ == '__main__':
 	#fromDir = "datasets/caf/face"    #源图片文件夹路径
 	#toDir = 'datasets/caf/facetest'    #移动到新的文件夹路径
 	#copyFile(fromDir,toDir,10)
-    multiDirSameFilesCopy(fromDirs,toDirs,filesNum)  
+    multiDirSameFilesCopy(fromDirs,toDirs,filesNum,isDeleteOld)  
