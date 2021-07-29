@@ -1,7 +1,0 @@
-# 引用 c
-
-
-// https://stackoverflow.com/questions/14953180/calling-c-dll-functions-returning-char-from-c-cannot-use-dllimport
-IntPtr verText = f1();
-string s = Marshal.PtrToStringAnsi(verText);
-Console.WriteLine(s);
